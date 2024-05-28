@@ -1,19 +1,21 @@
-steps:
-  - name: Checkout code  # Step 1: Fetching code
-    uses: actions/checkout@v2
+name: Automated API Tests
 
-  - name: Set up Node.js  # Step 2: Setting up Node.js environment
-    uses: actions/setup-node@v2
-    with:
-      node-version: '16'  # Using Node.js version 16
+on: [push, pull_request]
 
-  - name: Install dependencies  # Step 3: Installing dependencies
-    run: npm install
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  - name: Run tests  # Step 4: Running tests
-    run: npm test
+    steps:
+    - uses: actions/checkout@v3
 
-  - name: Build and deploy  # Step 5: Building and deploying
-    run: |
-      npm run build
-      # Add your deployment commands here
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Apifox CLI
+      run: npm install -g apifox-cli
+
+    - name: Running Test Scenario
+      run: apifox run https://api.apifox.com/api/v1/projects/4562437/api-test/ci-config/430672/detail?token=xiDwfs93Kb2yygHDpFwzD2 -r html,cli

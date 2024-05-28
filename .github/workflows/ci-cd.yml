@@ -1,0 +1,33 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main  # 触发条件：当 main 分支有新的提交时
+  pull_request:
+    branches:
+      - main  # 触发条件：当有针对 main 分支的 Pull Request 提交时
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 指定运行环境为 Ubuntu 最新版
+
+    steps:
+      - name: Checkout code  # 步骤1：拉取代码
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js  # 步骤2：配置 Node.js 环境
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies  # 步骤3：安装依赖
+        run: npm install
+
+      - name: Run tests  # 步骤4：运行测试
+        run: npm test
+
+      - name: Build and deploy  # 步骤5：构建和部署
+        run: |
+          npm run build
+          # Add your deployment commands here

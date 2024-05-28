@@ -1,33 +1,19 @@
-name: CI/CD Workflow
+steps:
+  - name: Checkout code  # Step 1: Fetching code
+    uses: actions/checkout@v2
 
-on:
-  push:
-    branches:
-      - main  # 触发条件：当 main 分支有新的提交时
-  pull_request:
-    branches:
-      - main  # 触发条件：当有针对 main 分支的 Pull Request 提交时
+  - name: Set up Node.js  # Step 2: Setting up Node.js environment
+    uses: actions/setup-node@v2
+    with:
+      node-version: '16'  # Using Node.js version 16
 
-jobs:
-  build:
-    runs-on: ubuntu-latest  # 指定运行环境为 Ubuntu 最新版
+  - name: Install dependencies  # Step 3: Installing dependencies
+    run: npm install
 
-    steps:
-      - name: Checkout code  # 步骤1：拉取代码
-        uses: actions/checkout@v2
+  - name: Run tests  # Step 4: Running tests
+    run: npm test
 
-      - name: Set up Node.js  # 步骤2：配置 Node.js 环境
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # 使用 Node.js 16 版本（示例中仍然使用 16 版本）
-
-      - name: Install dependencies  # 步骤3：安装依赖
-        run: npm install
-
-      - name: Run tests  # 步骤4：运行测试
-        run: npm test
-
-      - name: Build and deploy  # 步骤5：构建和部署
-        run: |
-          npm run build
-          # Add your deployment commands here
+  - name: Build and deploy  # Step 5: Building and deploying
+    run: |
+      npm run build
+      # Add your deployment commands here

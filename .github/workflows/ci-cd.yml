@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js  # 步骤2：配置 Node.js 环境
         uses: actions/setup-node@v2
         with:
-          node-version: '20'  # 使用 Node.js 20 版本
+          node-version: '16'  # 使用 Node.js 16 版本（示例中仍然使用 16 版本）
 
       - name: Install dependencies  # 步骤3：安装依赖
         run: npm install

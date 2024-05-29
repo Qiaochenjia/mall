@@ -1,4 +1,4 @@
-name: Java CI/CD
+nname: Java CI/CD
 
 on:
   push:
@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
+        distribution: 'adopt'  # 添加 distribution 参数
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
